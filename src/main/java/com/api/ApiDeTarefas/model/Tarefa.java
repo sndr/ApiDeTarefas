@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Entity
@@ -14,14 +16,16 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
-    @JsonProperty("nome")
-    @NotNull(message = "O nome da tarefa é obrigatório")
-    @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
-    private String nome;
+    @Column(name = "tarefa")
+    @JsonProperty("tarefa")
+    @NotNull(message = "A tarefa é obrigatória")
+    @Size(min = 1, max = 100, message = "A tarefa deve ter entre 1 e 100 caracteres")
+    private String tarefa;
 
     @Column(name = "data_entrega")
     @JsonProperty("dataEntrega")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataEntrega;
 
     @Column(name = "responsavel")

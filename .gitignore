@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+..src/main/java/resources/application.properties
+# Uncomment the line below to ignore the application.properties file

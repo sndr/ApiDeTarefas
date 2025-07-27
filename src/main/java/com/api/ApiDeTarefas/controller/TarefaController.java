@@ -45,7 +45,7 @@ public class TarefaController {
         Optional<Tarefa> tarefaOptional = tarefaService.findById(id);
         if (tarefaOptional.isPresent()) {
             Tarefa tarefa = tarefaOptional.get();
-            tarefa.setNome(tarefaDetails.getNome());
+            tarefa.setTarefa(tarefaDetails.getTarefa());
             tarefa.setDataEntrega(tarefaDetails.getDataEntrega());
             tarefa.setResponsavel(tarefaDetails.getResponsavel());
             Tarefa updatedTarefa = tarefaService.salvarTarefa(tarefa);
@@ -61,5 +61,25 @@ public class TarefaController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/responsavel/{responsavel}")
+    public ResponseEntity<List<Tarefa>> updateTarefaByResponsavel(@PathVariable String responsavel, @Valid @RequestBody Tarefa tarefaDetails) {
+        List<Tarefa> tarefas = tarefaService.findByResponsavel(responsavel);
+        if (!tarefas.isEmpty()) {
+            Tarefa tarefa = tarefas.get(0);
+            tarefa.setTarefa(tarefaDetails.getTarefa());
+            tarefa.setDataEntrega(tarefaDetails.getDataEntrega());
+            tarefa.setResponsavel(tarefaDetails.getResponsavel());
+            tarefaService.salvarTarefa(tarefa);
+            return ResponseEntity.ok(tarefaService.findAll());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/responsavel/{responsavel}")
+    public ResponseEntity<List<Tarefa>> deleteTarefaByResponsavel(@PathVariable String responsavel) {
+        tarefaService.deleteByResponsavel(responsavel);
+        return ResponseEntity.ok(tarefaService.findAll());
     }
 }

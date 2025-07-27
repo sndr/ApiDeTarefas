@@ -32,4 +32,12 @@ public class TarefaService {
     public void deleteById(Long id) {
         tarefaRepository.deleteById(id);
     }
+
+    public List<Tarefa> findByResponsavel(String responsavel) {
+        return tarefaRepository.findByResponsavel(responsavel);
+    }
+
+    public void deleteByResponsavel(String responsavel) {
+        tarefaRepository.findByResponsavel(responsavel).forEach(tarefaRepository::delete);
+    }
 }
